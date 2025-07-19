@@ -42,6 +42,9 @@
 
 		<!-- Mod -->
 		<Compile Include="..\**\*.cs" />
+		<Compile Remove="obj\**" />
+		<EmbeddedResource Remove="obj\**" />
+		<None Remove="obj\**" />
 		<Compile Remove="..\Loadout\Patches\CustomLoadouts\BetterPawnControl_Patch.cs" />
 		<Compile Remove="..\Loadout\Patches\CustomLoadouts\MedicinePatcher.cs" />
 		<Reference Include="CombatExtended">

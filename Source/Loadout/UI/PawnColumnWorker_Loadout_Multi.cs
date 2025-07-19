@@ -153,7 +153,7 @@ public class PawnColumnWorker_Loadout_Multi : PawnColumnWorker_Loadout
 
             if (Widgets.ButtonImage(personalLoadoutRect, Textures.PersonalLoadout))
             {
-                Find.WindowStack.Add(new Dialog_ManageLoadouts_Extended(pawn, (pawn.GetLoadout() as Loadout_Multi)!.PersonalLoadout));
+                Find.WindowStack.Add(new Dialog_ManageLoadouts_Extended(pawn, (LoadoutMulti_Manager.GetLoadout(pawn,false) as Loadout_Multi)!.PersonalLoadout!));
             }
             TooltipHandler.TipRegion(personalLoadoutRect, new TipSignal("CE_Extended.PersonalLoadoutTip".Translate(), pawn.GetHashCode() * 6178));
         }
@@ -166,8 +166,8 @@ public class PawnColumnWorker_Loadout_Multi : PawnColumnWorker_Loadout
         DbgLog.Msg($"Current index:{index}, loadout:{(pawn.GetLoadout() as Loadout_Multi)?[index].label}");
 
 #endif
-        string label = (pawn.GetLoadout() as Loadout_Multi)![index].label.Truncate(loadoutRect.width);
-        Widgets.Dropdown(loadoutRect, pawn, p => (p.GetLoadout() as Loadout_Multi)![index], Btn_GenerateMenu, label, null, null, null, null, true);
+        string label = (LoadoutMulti_Manager.GetLoadout(pawn, false) as Loadout_Multi)![index].label.Truncate(loadoutRect.width);
+        Widgets.Dropdown(loadoutRect, pawn, p => (LoadoutMulti_Manager.GetLoadout(p, false) as Loadout_Multi)![index], Btn_GenerateMenu, label, null, null, null, null, true);
 
         // Clear forced button
         num3 += loadoutRect.width;
@@ -178,7 +178,7 @@ public class PawnColumnWorker_Loadout_Multi : PawnColumnWorker_Loadout
         //changed: if (Widgets.ButtonText(assignTabRect, "AssignTabEdit".Translate(), true, false, true))
         if (Widgets.ButtonImage(assignTabRect, EditImage))
         {
-            Find.WindowStack.Add(new Dialog_ManageLoadouts_Extended((pawn.GetLoadout() as Loadout_Multi)![index]));
+            Find.WindowStack.Add(new Dialog_ManageLoadouts_Extended((LoadoutMulti_Manager.GetLoadout(pawn, false) as Loadout_Multi)![index]));
         }
         // Added this next line.
         TooltipHandler.TipRegion(assignTabRect, new TipSignal("CE_Loadouts".Translate(), pawn.GetHashCode() * 613));

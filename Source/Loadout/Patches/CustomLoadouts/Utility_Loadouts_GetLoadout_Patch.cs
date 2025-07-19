@@ -13,7 +13,7 @@ public static class Utility_Loadouts_GetLoadout_Patch
     public static bool GetLoadout(Pawn pawn, ref Loadout __result)
     {
         // original => return Loadout or LoadoutManager.DefaultLoadout
-        __result = LoadoutMulti_Manager.GetLoadout(pawn);
+        __result = LoadoutMulti_Manager.GetLoadout(pawn, true)!;
         return false;
     }
 }
