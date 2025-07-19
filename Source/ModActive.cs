@@ -4,7 +4,7 @@ namespace CombatExtended.ExtendedLoadout;
 
 public class ModActive
 {
-    private static bool _betterPawnControl = false;
+    //private static bool _betterPawnControl = false;
 
     public static bool BetterPawnControl
     {

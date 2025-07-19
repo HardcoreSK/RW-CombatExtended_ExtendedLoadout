@@ -16,22 +16,22 @@ namespace CombatExtended.ExtendedLoadout;
 [Serializable]
 public class LoadoutConfig
 {
-    public string label;
-    public LoadoutSlotConfig[] slots;
+    public string label = "";
+    public LoadoutSlotConfig[]? slots;
 }
 
 [Serializable]
 public class LoadoutSlotConfig
 {
     public bool isGenericDef;
-    public string defName;
+    public string defName = "";
     public int count;
 }
 
 [Serializable]
 public class LoadoutConfigs
 {
-    public LoadoutConfig[] configs;
+    public LoadoutConfig[]? configs;
 }
 
 public static class LoadUtil
@@ -61,7 +61,7 @@ public static class LoadUtil
     {
         var result = new List<Loadout>();
         unloadableDefNames = new List<string>();
-        foreach (var cfg in loadoutConfig.configs)
+        foreach (var cfg in loadoutConfig.configs!)
         {
             result.Add(FromConfig(cfg, out List<string> defs));
             unloadableDefNames.AddRange(defs);
@@ -110,7 +110,7 @@ public static class LoadUtil
         return !manager._loadouts.Any(l => l.label == label);
     }
 
-    public static LoadoutSlot FromConfig(LoadoutSlotConfig loadoutSlotConfig)
+    public static LoadoutSlot? FromConfig(LoadoutSlotConfig loadoutSlotConfig)
     {
         if (loadoutSlotConfig.isGenericDef)
         {
@@ -134,9 +134,9 @@ public static class LoadUtil
         unloadableDefNames = new List<string>();
 
         // Now create each of the slots
-        foreach (LoadoutSlotConfig loadoutSlotConfig in loadoutConfig.slots)
+        foreach (LoadoutSlotConfig loadoutSlotConfig in loadoutConfig.slots!)
         {
-            LoadoutSlot loadoutSlot = FromConfig(loadoutSlotConfig);
+            LoadoutSlot loadoutSlot = FromConfig(loadoutSlotConfig)!;
             // If the LoadoutSlot could not be loaded then continue loading the others as this most likely means
             // that the current game does not have the mod loaded that was used to create the initial loadout.
             if (loadoutSlot == null)
@@ -179,7 +179,7 @@ public class Dialog_SaveLoad : Window
     private const bool closeOnSave = false;
     private const int elementHeight = 25;
     private const int margin = 5;
-    private string _saveFileName;
+    private string _saveFileName = "";
     private List<(string name, Loadout[] loadouts, LoadStatus status, string loadStatusMessage)> _files;
     private int _selectedFile = -1, _previousSelectedFile = -1;
     private string _savePath = GenFilePaths.SaveDataFolderPath + "/CE.ExtendedLoadouts";
@@ -196,7 +196,9 @@ public class Dialog_SaveLoad : Window
         Error
     }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Dialog_SaveLoad()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         DirectoryInfo directoryInfo = new DirectoryInfo(_savePath);
         if (!directoryInfo.Exists)
@@ -207,7 +209,7 @@ public class Dialog_SaveLoad : Window
         absorbInputAroundWindow = true;
         closeOnAccept = false;
         draggable = true;
-        ReloadFiles();
+        ReloadFiles(); // Initialises _files, Hence the warning disable
     }
 
     private void ReloadFiles()
@@ -229,7 +231,7 @@ public class Dialog_SaveLoad : Window
             }
             catch (Exception ex)
             {
-                _files.Add(new(Path.GetFileNameWithoutExtension(file), null, LoadStatus.Error, ex.ToString()));
+                _files.Add(new(Path.GetFileNameWithoutExtension(file), null!, LoadStatus.Error, ex.ToString()));
             }
         }
     }
@@ -279,8 +281,8 @@ public class Dialog_SaveLoad : Window
                         xmlSerializer.Serialize(writer, GetCheckedLoadouts().ToConfig());
                     }
                     ReloadFiles();
-                    if (closeOnSave)
-                        Close();
+                    //if (closeOnSave)
+                    //    Close();
                 }
             }
         }

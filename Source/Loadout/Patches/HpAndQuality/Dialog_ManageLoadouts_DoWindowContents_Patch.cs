@@ -16,7 +16,7 @@ namespace CombatExtended.ExtendedLoadout;
 [HotSwappable]
 public class Dialog_ManageLoadouts_DoWindowContents_Patch
 {
-    private static readonly float allowedMaxYIncrease = 100f;
+    //private static readonly float allowedMaxYIncrease = 100f;
     static bool Prepare() => ExtendedLoadoutMod.Instance.useHpAndQualityInLoadouts;
 
     [HarmonyTranspiler]
