@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
 using Verse;
 
 namespace CombatExtended.ExtendedLoadout;
@@ -27,9 +26,8 @@ public class Loadout_Multi : Loadout, IExposable, ILoadReferenceable
     new public int uniqueID;
     public new int SlotCount => Slots.Count;
     public new List<LoadoutSlot> Slots { get; private set; } = new();
-    private List<Loadout> _loadouts; // gets initialised in Loadout_Multi(Pawn pawn)
+    private List<Loadout> _loadouts;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Loadout_Multi()
     {
         // only used for expose data!
@@ -82,7 +80,7 @@ public class Loadout_Multi : Loadout, IExposable, ILoadReferenceable
     /// </summary>
     public void NotifyLoadoutChanged()
     {
-        Slots = _loadouts.Prepend(PersonalLoadout).Where(x => x != null).SelectMany(x => x!.Slots).ToList();
+        Slots = _loadouts.Prepend(PersonalLoadout).Where(x => x != null).SelectMany(x => x.Slots).ToList();
         DbgLog.Msg("Loadout_Multi.NotifyLoadoutChanged");
     }
 

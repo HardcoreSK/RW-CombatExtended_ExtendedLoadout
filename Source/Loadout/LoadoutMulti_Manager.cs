@@ -93,7 +93,7 @@ public static class LoadoutMulti_Manager
         return loadoutsMulti.Any() ? loadoutsMulti.Max(l => l.uniqueID) + 1 : 1;
     }
 
-    public static Loadout? GetLoadout(Pawn pawn, bool allowNull)
+    public static Loadout GetLoadout(Pawn pawn)
     {
         if (!assignedLoadoutsMulti.TryGetValue(pawn, out var loadout))
         {
@@ -104,11 +104,6 @@ public static class LoadoutMulti_Manager
         if (loadout.PersonalLoadout == null)
         {
             loadout.GeneratePersonalLoadout(pawn);
-        }
-        //Log.Message(loadout != null ? "loadout Not null" : "loadout is null");
-        if (allowNull && loadout != null && loadout.SlotCount == 0)
-        {
-            return null;
         }
         return loadout;
     }
