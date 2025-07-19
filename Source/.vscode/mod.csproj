@@ -47,6 +47,10 @@
 		<None Remove="obj\**" />
 		<Compile Remove="..\Loadout\Patches\CustomLoadouts\BetterPawnControl_Patch.cs" />
 		<Compile Remove="..\Loadout\Patches\CustomLoadouts\MedicinePatcher.cs" />
+		<Reference Include="CombatExtended">
+			<HintPath>..\..\..\CombatExtended\Assemblies\CombatExtended.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
 		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -58,12 +62,6 @@
 		<!-- Publicizer -->
 		<Publicize Include="Assembly-CSharp;CombatExtended" />
 
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="CombatExtended">
-	    <HintPath>..\..\..\CombatExtended\Assemblies\CombatExtended.dll</HintPath>
-	  </Reference>
 	</ItemGroup>
 
 	<UsingTask TaskName="VersionIncrement" AssemblyFile="msbuild/VersionIncrement.dll" />
