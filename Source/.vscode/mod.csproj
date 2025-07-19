@@ -62,7 +62,7 @@
 
 	<ItemGroup>
 	  <Reference Include="CombatExtended">
-	    <HintPath>..\..\Assemblies\CombatExtended.dll</HintPath>
+	    <HintPath>..\..\..\CombatExtended\Assemblies\CombatExtended.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 
