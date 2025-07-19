@@ -64,6 +64,7 @@
 		<Publicize Include="Assembly-CSharp;CombatExtended" />
 
 	</ItemGroup>
+	<Import Project=".vs/OutputPath.props" Condition="Exists('.vs/OutputPath.props')" />
 
 	<UsingTask TaskName="VersionIncrement" AssemblyFile="msbuild/VersionIncrement.dll" />
 
