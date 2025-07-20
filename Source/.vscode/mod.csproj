@@ -16,8 +16,7 @@
 		<Copyright>PirateBY© 2021</Copyright>
 		<Company>Microsoft</Company>
 		<GameVersion Condition="'$(Version)' == ''">1.6</GameVersion>
-		<Version>1.0.0</Version> <!-- If compile in Visual Studio with @(VERSION) you get error NugetVersion -->
-		<FileVersion>@(VERSION)</FileVersion>
+		<FileVersion>1.0.0</FileVersion>
 
 		<!-- do not generate pdb file -->
 		<DebugType>none</DebugType>
@@ -27,7 +26,7 @@
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks> <!-- allow unsafe code -->
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo> <!-- false if you want use AssemblyInfo.cs -->
-		<Deterministic>false</Deterministic> <!-- Produce byte-for-byte equivalent output from the same input source. -->
+		<Deterministic>true</Deterministic> <!-- Produce byte-for-byte equivalent output from the same input source. -->
 		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<NullableReferenceTypes>true</NullableReferenceTypes>
@@ -77,5 +76,13 @@
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<!--<Exec Command="rd &quot;$(ProjectDir)\obj&quot; &quot;$(ProjectDir)\bin&quot; /S /Q" />-->
 	</Target>
+
+	<PropertyGroup>
+		<PackageId>bananasss00.ce.extendedloadout</PackageId>
+		<Version>1.0.1</Version>
+		<Authors>PirateBY</Authors>
+		<Company>HardcoreSK</Company>
+		<RepositoryUrl>https://github.com/HardcoreSK/RW-CombatExtended_ExtendedLoadout</RepositoryUrl>
+	</PropertyGroup>
 
 </Project>
