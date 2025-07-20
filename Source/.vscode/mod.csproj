@@ -79,7 +79,7 @@
 
 	<PropertyGroup>
 		<PackageId>bananasss00.ce.extendedloadout</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>PirateBY</Authors>
 		<Company>HardcoreSK</Company>
 		<RepositoryUrl>https://github.com/HardcoreSK/RW-CombatExtended_ExtendedLoadout</RepositoryUrl>
