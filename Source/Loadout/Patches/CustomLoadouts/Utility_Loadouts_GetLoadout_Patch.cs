@@ -46,6 +46,7 @@ public static class Utility_HoldTracker_Notify_HoldTrackerItem_Patch
     {
         if (LoadoutMulti_Manager.GetLoadout(pawn, false)!.defaultLoadout)
             return false;
+        //Vanilla code below
         List<HoldRecord> holdRecordList = LoadoutManager.GetHoldRecords(pawn);
         if (holdRecordList == null)
         {
