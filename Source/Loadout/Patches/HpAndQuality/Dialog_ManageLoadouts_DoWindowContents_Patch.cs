@@ -61,7 +61,7 @@ public class Dialog_ManageLoadouts_DoWindowContents_Patch
 
     public static void DrawHpQuality(Dialog_ManageLoadouts dialog, Rect bulkBarRect)
     {
-        Rect refillRect = new(bulkBarRect.xMin, bulkBarRect.yMax + 36f, bulkBarRect.width, Dialog_ManageLoadouts._barHeight);
+        Rect refillRect = new(bulkBarRect.xMin, bulkBarRect.yMax + 72f, bulkBarRect.width, Dialog_ManageLoadouts._barHeight);
         Rect hpRect = new(refillRect.xMin, refillRect.yMax + Dialog_ManageLoadouts._margin, refillRect.width, Dialog_ManageLoadouts._barHeight);
         Rect qualityRect = new(hpRect.xMin, hpRect.yMax + Dialog_ManageLoadouts._margin, hpRect.width, Dialog_ManageLoadouts._barHeight);
         var loadoutExtended = dialog.CurrentLoadout.Extended();
