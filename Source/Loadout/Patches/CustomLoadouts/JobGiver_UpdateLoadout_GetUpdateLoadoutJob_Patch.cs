@@ -1,5 +1,6 @@
 using HarmonyLib;
 using RimWorld;
+using System;
 using Verse;
 using Verse.AI;
 
@@ -10,21 +11,49 @@ public static class JobGiver_UpdateLoadout_GetUpdateLoadoutJob_Patch
 {
     static bool Prepare() => ExtendedLoadoutMod.Instance.useMultiLoadouts;
 
-    [HarmonyPostfix]
-    public static void RejectUnreservableExcessHaul(Pawn pawn, ref Job? __result)
+    [HarmonyPrefix]
+    public static bool RouteExcessInventoryDirectly(Pawn pawn, ref Job? __result)
     {
-        if (__result?.def != JobDefOf.HaulToCell || __result.targetA.Thing == null)
+        if (pawn.Map == null || pawn.TryGetComp<CompInventory>()?.container == null)
         {
-            return;
+            return true;
         }
 
-        // The CE excess-item path drops the item first, then immediately creates
-        // a haul job. The dropped item can merge into an already-reserved stack.
-        // Reject that job before StartJob so RimWorld does not emit reservation
-        // errors; normal hauling can pick the item up after the reservation clears.
-        if (!pawn.CanReserve(__result.targetA, 1, -1))
+        if (pawn.equipment?.Primary is WeaponPlatform platform)
         {
-            __result = null;
+            platform.TrySyncPlatformLoadout(pawn);
         }
+
+        // Preserve CE's priority: excess equipped weapons are handled first.
+        if (pawn.GetExcessEquipment(out _)
+            || !pawn.GetExcessThing(out Thing dropThing, out int dropCount)
+            || dropThing == null
+            || dropCount <= 0
+            || !dropThing.def.EverStorable(true))
+        {
+            return true;
+        }
+
+        if (!StoreUtility.TryFindBestBetterStoreCellFor(
+                dropThing,
+                pawn,
+                pawn.Map,
+                StoragePriority.Unstored,
+                pawn.Faction,
+                out IntVec3 storeCell,
+                true)
+            || !pawn.CanReserve(storeCell, 1, -1))
+        {
+            // If there is no valid storage cell, retain CE's drop-on-ground fallback.
+            return true;
+        }
+
+        Job job = JobMaker.MakeJob(
+            ExtendedLoadout_JobDefOf.CE_Extended_UnloadLoadoutItem,
+            dropThing,
+            storeCell);
+        job.count = Math.Min(dropCount, dropThing.stackCount);
+        __result = job;
+        return false;
     }
 }
