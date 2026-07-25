@@ -36,7 +36,7 @@ public class ExtendedLoadoutMod : ModBase
     public const int MaxColumnCount = 10;
 
     // indicate need patches or not
-    public bool useMultiLoadouts, useHpAndQualityInLoadouts;
+    public bool useMultiLoadouts, useHpAndQualityInLoadouts, showCharacterCard;
 
     protected override bool HarmonyAutoPatch => false;
 
@@ -60,6 +60,7 @@ public class ExtendedLoadoutMod : ModBase
         ModSettingsPack modSettingsPack = HugsLibController.Instance.Settings.GetModSettings("CombatExtended.ExtendedLoadout");
         SettingHandle<bool> UseHpAndQualityInLoadouts = modSettingsPack.GetHandle("UseHpAndQualityInLoadouts", "Settings.UseHpAndQualityInLoadouts.Label".Translate(), "Settings.UseHpAndQualityInLoadouts.Desc".Translate(), true);
         SettingHandle<bool> UseMultiLoadouts = modSettingsPack.GetHandle("UseMultiLoadouts", "Settings.UseMultiLoadouts.Label".Translate(), "Settings.UseMultiLoadouts.Desc".Translate(), true);
+        SettingHandle<bool> ShowCharacterCard = modSettingsPack.GetHandle("ShowCharacterCard", "Settings.ShowCharacterCard.Label".Translate(), "Settings.ShowCharacterCard.Desc".Translate(), false);
         SettingHandle<int> MultiLoadoutsCount = modSettingsPack.GetHandle("MultiLoadoutsCount", "Settings.MultiLoadoutsCount.Label".Translate(), "Settings.MultiLoadoutsCount.Desc".Translate(), 3, value => int.TryParse(value, out int num) && num is >= 2 and <= 10);
         MultiLoadoutsCount.VisibilityPredicate = () => UseMultiLoadouts;
 
@@ -82,6 +83,7 @@ public class ExtendedLoadoutMod : ModBase
 
         // inject columns and set settings  
         useHpAndQualityInLoadouts = UseHpAndQualityInLoadouts;
+        showCharacterCard = ShowCharacterCard;
         if (UseMultiLoadouts && MultiLoadoutsCount >= 2 && MultiLoadoutsCount <= MaxColumnCount)
         {
             List<PawnColumnDef> columns = DefDatabase<PawnTableDef>.GetNamed("Assign").columns;

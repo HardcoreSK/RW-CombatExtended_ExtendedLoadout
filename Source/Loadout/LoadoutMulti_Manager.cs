@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -12,6 +13,8 @@ public static class LoadoutMulti_Manager
     private static List<Loadout_Multi> valuesWorkingList = null!;
 
     private static Dictionary<Pawn, Loadout_Multi> assignedLoadoutsMulti = new();
+
+    //private static int lastRunTick = -1;
 
     public static void ExposeData(LoadoutManager __instance)
     {
@@ -105,6 +108,35 @@ public static class LoadoutMulti_Manager
         {
             loadout.GeneratePersonalLoadout(pawn);
         }
+        /* If we want to use CE Ad Hoc, its here...
+        int tick = Find.TickManager.TicksGame;
+        //Log.Message(tick + " : " + lastRunTick);
+
+        if (lastRunTick != tick && pawn != null && pawn.IsHashIntervalTick(130) && loadout.PersonalLoadout?.adHoc == true)
+        {
+            lastRunTick = tick;
+
+            //Log.Warning("GetSlotsFor check has run");
+            //Log.Warning($"Tick={Find.TickManager.TicksGame}, Pawn={pawn.thingIDNumber}");
+            List<LoadoutSlot> newslots = new List<LoadoutSlot>();
+            foreach (LoadoutSlot slot in loadout.PersonalLoadout.GetSlotsFor(pawn))
+            {
+                if (loadout.PersonalLoadout.Slots.Count(s => s.thingDef == slot.thingDef) == 0)
+                {
+                    Log.Message($"Adding Slot : {slot.thingDef.defName} - Count: {slot.count}");
+                    newslots.Add(slot);
+                }
+
+            }
+            foreach (var item in newslots)
+            {
+                loadout.PersonalLoadout.Slots.Add(item); 
+            }
+            if (!newslots.NullOrEmpty())
+                loadout.NotifyLoadoutChanged();
+
+        }*/
+
         //Log.Message(loadout != null ? "loadout Not null" : "loadout is null");
         if (allowNull && loadout != null && loadout.SlotCount == 0)
         {

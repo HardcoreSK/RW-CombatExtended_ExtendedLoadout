@@ -43,6 +43,13 @@ public class Loadout_Multi : Loadout, IExposable, ILoadReferenceable
         uniqueID = LoadoutMulti_Manager.GetUniqueLoadoutID();
     }
 
+    public Pawn? GetPawn()
+    {
+        if (_pawn == null)
+            return null;
+        return _pawn;
+    }
+
     public void GeneratePersonalLoadout(Pawn pawn)
     {
         if (!pawn.RaceProps.Humanlike)
