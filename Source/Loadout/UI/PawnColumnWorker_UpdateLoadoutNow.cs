@@ -30,6 +30,9 @@ public class PawnColumnWorker_UpdateLoadoutNow : PawnColumnWorker
 
     private static void UpdateLoadoutNow(Pawn pawn)
     {
+        if (!pawn.IsColonistPlayerControlled)
+            return;
+
         Job? job = pawn.thinker?.GetMainTreeThinkNode<JobGiver_UpdateLoadout>()?.TryGiveJob(pawn);
         if (job != null)
         {
