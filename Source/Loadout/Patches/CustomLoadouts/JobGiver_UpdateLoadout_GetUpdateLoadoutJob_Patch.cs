@@ -1,6 +1,8 @@
 using HarmonyLib;
 using RimWorld;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using Verse.AI;
 
@@ -23,6 +25,8 @@ public static class JobGiver_UpdateLoadout_GetUpdateLoadoutJob_Patch
         {
             platform.TrySyncPlatformLoadout(pawn);
         }
+
+        List<Thing> removed = new();
 
         // Preserve CE's priority: excess equipped weapons are handled first.
         if (pawn.GetExcessEquipment(out _)
